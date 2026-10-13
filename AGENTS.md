@@ -192,3 +192,17 @@ Import `test-data/contacts.csv` via the Contacts page → Import button.
 - Filter operators must be supported by the `supabaseAdapter` when using FakeRest
 - `.npmrc` sets `min-release-age`, so npm refuses a version published too recently: never override it to install a fresher one
 - Optional terse output for solo work: the `concise-dev` style ships at `.claude/styles/concise-dev.md`. To enable it just for yourself, copy it into `.claude/output-styles/` (or `~/.claude/output-styles/`) and run `/output-style concise-dev`, or set `"outputStyle": "concise-dev"` in your own `.claude/settings.local.json`. It is not enabled in the committed `settings.json`.
+
+
+## PROJECT RULES (added by owner)
+- Before any work, read PROJECT_SPEC.md in the repo root.
+- Build ONE phase at a time, only when the owner says "go".
+- Before coding a phase: give a short plan (files, tables, env vars) and WAIT for "go".
+- After coding: explain in plain language what you did, how to test it, and what could break. The owner is a complete beginner on Windows (PowerShell).
+- Reuse existing Atomic CRM patterns. Do not rewrite files unnecessarily. Do not touch auth/login.
+- TypeScript strict. Run type check and lint before finishing.
+- Secrets only in .env or Edge Function secrets. Document new variables in .env.example. Never commit secrets.
+- All third-party API calls (Gemini, Resend) happen server-side in Supabase Edge Functions, never in the browser.
+- Entire UI, emails, WhatsApp templates and AI output in FRENCH. Dates DD/MM/YYYY, currency MAD.
+- Every new table must have Row Level Security enabled.
+- The product description and AI prompts are NOT hard-coded. They come from the app_settings table (see PROJECT_SPEC.md section 1b).
