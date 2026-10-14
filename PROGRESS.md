@@ -2,14 +2,84 @@
 
 Last updated: 13/10/2026 (owner's timezone).
 
+## Approved documentation reconciliation
+
+Owner approval for this update covers PROJECT_SPEC.md and PROGRESS.md ONLY.
+No application code, migrations, authentication, secrets, staging, commit or push.
+Phase 1 planning and implementation have not been approved by this update.
+
+- Added the approved mass email/WhatsApp contract: all HP, MP, LP or any
+  combination, individual schools, combined filters, search by school/city/
+  contact/email/phone, selection across every page and manual recipient exclusions.
+- Added explicit selected/eligible/excluded/duplicate counts, destination choices,
+  editable French templates/personalized variables, reusable campaigns, editable
+  generation prompts and mandatory final recipient/message previews.
+- Defined immutable run/message snapshots, fresh checks when reusing campaigns,
+  consent/opt-outs, duplicate-safe sending/events and preserved delivery history.
+- Distinguished native provider-backed CRM campaigns (server queues/rate limits)
+  from optional external marketing-platform connections/synchronization. Initial
+  WhatsApp remains guided wa.me; automated bulk WhatsApp waits for a separately
+  approved provider, proper opt-in and applicable approved templates.
+- Recorded exact future email adapter options: Resend, Brevo, SendGrid, Mailgun,
+  Amazon SES, Mailchimp. Recorded exact future WhatsApp options: Meta Cloud API,
+  Twilio, 360dialog, WATI, Infobip, Gupshup. No connector was implemented.
+- Clarified built-in CRM capabilities, Supabase/FakeRest data providers, external
+  AI/sending services, and the separate existing Postmark inbound capability.
+- Recorded future administrator CRM name/logo/favicon/brand-color controls.
+  Existing title and light/dark logo customization is reused; favicon/colors are
+  not implemented. Premium/youthful/bold/professional design remains required;
+  no final name/logo is chosen. Typography controls are an optional extension.
+- Retained independent salesperson ratings, automatic HP/MP/LP, shared ownership,
+  complete history, remembered combined filters, calls/notes/follow-up reminders,
+  safe Google Place ID enrichment and secure Supabase permissions.
+- Clarified one-current-rating averaging, validated thresholds/recalculation,
+  no school sales-stage pipeline, the role/action contract and direct API tests.
+- Corrected phase dependencies: secure ratings/ownership/basic school notes before
+  the map; WhatsApp campaign/history foundations before exports and email; initial
+  provider setup in its own approved phase rather than delayed until UI polish.
+- Clarified French/MAD defaults, preserved explicit preferences and native date
+  editor conventions. All original CSV columns/mappings, phone/city handling,
+  AI cache/verification, unsubscribe/domain setup and UTF-8 BOM requirements remain.
+
+Validation for this documentation-only update: strict typecheck and ESLint passed
+(existing nonblocking .eslintignore warning). Changed-document Prettier and Git
+whitespace checks passed. Reviewed the diff and verified both exact provider lists,
+original CSV/export rules, phase order and Phase 0 commit reference. Only these
+two documents are modified; nothing is staged, committed or pushed. No browser
+or application regression suite was rerun for these documentation changes.
+Phase 0 results below are historical; they do not imply the newly documented
+features have been implemented or tested.
+
+## Requirements implementation status
+
+| Requirement                                                                          | Actual status                                                        | Approved future scope                                                                      |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| French defaults, DD/MM/YYYY display, MAD default                                     | Implemented in Phase 0; explicit preferences respected               | Preserve throughout future phases                                                          |
+| CRM title and light/dark logos                                                       | Existing Atomic CRM administrator configuration                      | Reuse for branding; no final identity chosen                                               |
+| Favicon/brand-color controls and design refinement                                   | Required, not implemented                                            | Phase 8; optional typography controls need an approved scope                               |
+| School fields, Place ID enrichment/conflict review, remembered combined filters      | Specified, not implemented                                           | Phase 1, pending separate plan/approval                                                    |
+| Unassigned pool, atomic ownership/history and independent ratings/automatic priority | Specified; current database does not enforce them                    | Secure foundations in Phase 1; map use in Phase 2; full assignment workflow in Phase 4     |
+| Basic school notes and contact-independent follow-ups                                | Existing components reusable; school-specific behavior pending       | Basic school notes in Phase 1; calls/follow-ups/dashboard/reminders in Phase 4             |
+| Clustered map/city panels                                                            | Specified, not implemented                                           | Phase 2                                                                                    |
+| Mass targeting/search/all-page selection/exclusions/counts/preview                   | Required, not implemented                                            | Guided WhatsApp in Phase 6; email in Phase 5; later automated WhatsApp separately approved |
+| Editable French templates/variables/reusable campaigns/history                       | Required, not implemented                                            | Shared guided campaign foundation in Phase 6; email extension in Phase 5                   |
+| Product description, editable AI prompts, priority thresholds                        | app_settings specified, not created                                  | Nonsecret foundations/minimum settings UI in Phase 1 plan; AI calls only Phase 3           |
+| Native queued provider sending and verified delivery events                          | Not implemented                                                      | Resend email in Phase 5; approved automated WhatsApp in later Phase 9                      |
+| External marketing-platform sync and additional adapters                             | Optional future choices; none implemented                            | Phase 8/later, connector-specific approval required                                        |
+| AI school info and campaign generation                                               | No built-in hosted AI selected; no integration implemented           | Approved Gemini/Vertex AI/OpenRouter integration in Phase 3                                |
+| Exports                                                                              | Existing generic exporter; requested school/activity exports pending | Phase 7 for available data; email activity extension after Phase 5                         |
+| Production/team permissions                                                          | Deployment blockers remain; documentation is not a fix               | Enforce in each relevant approved phase and review again in Phase 8                        |
+
 ## Phase 0
 
 Scope approved by the owner: setup, specification, French defaults, date/currency
 display, safe environment example, validation and local commit. No Phase 1 work.
+Completed in local commit 4976a70. This reconciliation is a later, uncommitted
+documentation update and does not change the completed Phase 0 implementation.
 
 ### Completed implementation
 
-- Updated PROJECT_SPEC.md with all confirmed decisions while preserving the
+- Updated PROJECT_SPEC.md with the confirmed decisions available at Phase 0 while preserving the
   original CSV mappings, phone/city normalization, map requirements, AI caching,
   email queue/unsubscribe requirements, exports and optional later integrations.
 - French defaults independently of browser language. Existing translation
@@ -56,6 +126,8 @@ display, safe environment example, validation and local commit. No Phase 1 work.
   ignored by Git, not delivered as source files.
 - Local delivery uses the normal pre-commit hook after these checks, with no
   make dependency and no bypass. Nothing is pushed to GitHub.
+- These results describe the Phase 0 commit, not a new application test run for
+  this documentation reconciliation or proof that future features work.
 
 ### Real Supabase browser verification
 
@@ -111,6 +183,19 @@ There are 28 existing migrations; Phase 0 adds none.
 - RLS existing is not evidence that the new product permissions are safe. These
   blockers must be resolved and tested before real staff use; Phase 0 leaves
   database permissions unchanged as required.
+- Required future checks include forged authors/owners, simultaneous claims,
+  inactive assignees, another user's ratings/preferences, nonadmin settings writes,
+  task/ownership-history preservation and direct API/MCP bypass attempts.
+- Campaign phases must enforce final approved audiences/messages, applicable
+  consent/unsubscribe/opt-in, server-only secrets/calls, safe retry/webhook handling
+  and prevention of CRM/platform double sending. Imported addresses/numbers are
+  not proof of consent. Initial wa.me cannot establish delivery/read status.
+- Recipient unsubscribe endpoints must validate scoped tokens without requiring
+  CRM login or granting anonymous business-data access. Provider callbacks use
+  verified signatures; queue workers use restricted server authority.
+- Campaign launch/sync/template-sharing permissions, metadata edits/archive and
+  activity corrections require an explicit role matrix in their approved phase
+  plan; general school visibility is not blanket mass-send authorization.
 
 ## Windows testing steps
 
@@ -161,19 +246,43 @@ and Vite's future native config loader; no dependency upgrade is part of Phase 0
 
 ## Pending phases and next steps
 
-| Demo order | Status/scope                                                                                                                                                                              |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0          | Complete: automated checks and real Supabase browser verification; local-only delivery                                                                                                    |
-| 1          | Not started: schools model, safe CSV enrichment/conflicts, combined remembered filters, photo and rating/ownership/settings foundations; security blockers addressed in its approved plan |
-| 2          | Not started: clustered map, city panels, mobile cards, independent ratings                                                                                                                |
-| 4          | Not started: shared pool and assignment actions, calls/history, priority views, follow-up dashboard/reminders                                                                             |
-| 6          | Not started: wa.me and configurable French templates; honest opened/sent logging                                                                                                          |
-| 7          | Not started: UTF-8 BOM exports                                                                                                                                                            |
-| 3          | Not started: selected server-side AI provider, cached verified school info                                                                                                                |
-| 5          | Not started: Resend, queue, unsubscribe/opt-outs and domain setup                                                                                                                         |
-| 8          | Not started: original design refinement, integration settings/security review                                                                                                             |
-| 9          | Optional later: calls/recording and official WhatsApp provider; separate approval                                                                                                         |
+| Demo order | Status/scope                                                                                                                                                                                                    |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0          | Complete: automated checks and real Supabase browser verification; local-only delivery                                                                                                                          |
+| 1          | Not started: schools/CSV enrichment/conflicts, remembered combined filters/photo, secure atomic ownership/history, rating/priority/basic-note and nonsecret settings foundations; separate plan approval needed |
+| 2          | Not started: clustered map/city panels/cards using Phase 1 rating/note APIs; functional WhatsApp/AI buttons added only in Phases 6/3                                                                            |
+| 4          | Not started: complete assignment interface, calls/history, contact-independent follow-ups, priority dashboard and in-app reminders                                                                              |
+| 6          | Not started: guided wa.me campaigns, all-priority/individual targeting, recipient search/all-page exclusions/counts, French templates/variables/prompts, final preview and campaign/message history             |
+| 7          | Not started: UTF-8 BOM exports of schools, calls and available WhatsApp history; email extension after Phase 5                                                                                                  |
+| 3          | Not started: selected server-side AI provider/setup, cached verified school info, editable app_settings prompts and optional campaign AI drafting                                                               |
+| 5          | Not started: Resend setup/native queue/rate limits, full email targeting/templates/reusable campaigns/preview, consent/unsubscribes, delivery history and domain setup                                          |
+| 8          | Not started: original design refinement, administrator favicon/colors using existing title/logos, provider management and security review; optional additional adapters/platform sync need separate approval    |
+| 9          | Optional later: calls/recording and approved automated bulk WhatsApp with opt-in/templates, server queues/rate limits and delivery events; separate approval                                                    |
 
-Next action after Phase 0: present a short Phase 1 plan (files, exact tables,
-permissions, environment, tests) and wait for the owner's explicit "go". Do not
-start another phase or push this work automatically.
+## Remaining decisions and reconciled boundaries
+
+- No unresolved contradiction between the updated product requirements: preserved
+  legacy deals are not a new school pipeline; Phase 2 ratings/notes depend on
+  Phase 1 APIs; Phase 7 exports only data already available; provider configuration
+  belongs to its integration phase; wa.me is guided, not automated bulk delivery.
+- Future phase plans still need exact schemas, permissions for campaign launches/
+  sync/templates and metadata/activity editing, destination choices when several
+  contacts exist, and provider/platform sync scope/capabilities. These are pending
+  implementation decisions, not approval to build them now.
+- Initial email remains Resend and initial WhatsApp remains guided wa.me. No
+  extra email/WhatsApp connector or AI provider has been selected by this update.
+- French/MAD defaults and existing explicit preferences coexist; deployment checks
+  verify the intended French/MAD configuration without rewriting user data. Native
+  date editor presentation remains browser/Windows-dependent.
+- AGENTS.md still describes the upstream make-based hook and historical CRM
+  pipeline/configuration API. It was not edited because this approval permits
+  only the two documents. The Phase 0 code/PROGRESS.md describe the actual npm
+  hook; future plans must inspect real code rather than treat upstream examples
+  as implemented school features or existing color/favicon controls.
+- The original "demo in 1 week" remains an original target, not a newly confirmed
+  calendar deadline. No new release date is selected by this reconciliation.
+
+Next action: wait for the owner's approval to PREPARE a Phase 1 plan. That plan
+must specify files, exact tables/permissions, environment, tests and deployment
+blockers, then receive an explicit "go" before coding. This documentation update
+does not approve Phase 1 planning/implementation, staging, committing or pushing.
