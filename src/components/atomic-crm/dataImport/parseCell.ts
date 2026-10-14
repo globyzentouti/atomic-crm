@@ -1,4 +1,5 @@
 import type { LabeledValue } from "../types";
+import { toSlug } from "@/lib/toSlug";
 import type { ImportCell } from "./types";
 
 /** Trimmed cell content, or undefined when the cell is empty. */
@@ -64,6 +65,10 @@ export const toConfiguredValue = (
   return options.find(
     (option) =>
       option.value.toLowerCase() === text ||
-      option.label.toLowerCase() === text,
+      option.label.toLowerCase() === text ||
+      // Preserve imports using the former English default labels after the
+      // display labels become French. Only configured values can match.
+      option.value.toLowerCase() === toSlug(text) ||
+      (option.value === "in-negociation" && text === "in negotiation"),
   )?.value;
 };

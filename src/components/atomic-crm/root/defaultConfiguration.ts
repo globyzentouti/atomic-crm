@@ -8,60 +8,60 @@ import lightModeLogo from "./logos/logo_atomic_crm_light.svg";
 export const defaultDarkModeLogo = darkModeLogo;
 export const defaultLightModeLogo = lightModeLogo;
 
-export const defaultCurrency = "USD";
+export const defaultCurrency = "MAD";
 
 export const defaultTitle = "Atomic CRM";
 
 export const defaultCompanySectors = [
-  { value: "communication-services", label: "Communication Services" },
-  { value: "consumer-discretionary", label: "Consumer Discretionary" },
-  { value: "consumer-staples", label: "Consumer Staples" },
-  { value: "energy", label: "Energy" },
-  { value: "financials", label: "Financials" },
-  { value: "health-care", label: "Health Care" },
-  { value: "industrials", label: "Industrials" },
-  { value: "information-technology", label: "Information Technology" },
-  { value: "materials", label: "Materials" },
-  { value: "real-estate", label: "Real Estate" },
-  { value: "utilities", label: "Utilities" },
+  { value: "communication-services", label: "Services de communication" },
+  { value: "consumer-discretionary", label: "Biens de consommation" },
+  { value: "consumer-staples", label: "Biens de première nécessité" },
+  { value: "energy", label: "Énergie" },
+  { value: "financials", label: "Services financiers" },
+  { value: "health-care", label: "Santé" },
+  { value: "industrials", label: "Industrie" },
+  { value: "information-technology", label: "Technologies de l'information" },
+  { value: "materials", label: "Matériaux" },
+  { value: "real-estate", label: "Immobilier" },
+  { value: "utilities", label: "Services publics" },
 ];
 
 export const defaultDealStages = [
-  { value: "opportunity", label: "Opportunity" },
-  { value: "proposal-sent", label: "Proposal Sent" },
-  { value: "in-negociation", label: "In Negotiation" },
-  { value: "won", label: "Won" },
-  { value: "lost", label: "Lost" },
-  { value: "delayed", label: "Delayed" },
+  { value: "opportunity", label: "Opportunité" },
+  { value: "proposal-sent", label: "Proposition envoyée" },
+  { value: "in-negociation", label: "En négociation" },
+  { value: "won", label: "Gagné" },
+  { value: "lost", label: "Perdu" },
+  { value: "delayed", label: "Reporté" },
 ];
 
 export const defaultDealPipelineStatuses = ["won"];
 
 export const defaultDealCategories = [
-  { value: "other", label: "Other" },
-  { value: "copywriting", label: "Copywriting" },
-  { value: "print-project", label: "Print project" },
-  { value: "ui-design", label: "UI Design" },
-  { value: "website-design", label: "Website design" },
+  { value: "other", label: "Autre" },
+  { value: "copywriting", label: "Rédaction" },
+  { value: "print-project", label: "Projet d'impression" },
+  { value: "ui-design", label: "Design d'interface" },
+  { value: "website-design", label: "Création de site web" },
 ];
 
 export const defaultNoteStatuses = [
-  { value: "cold", label: "Cold", color: "#7dbde8" },
-  { value: "warm", label: "Warm", color: "#e8cb7d" },
-  { value: "hot", label: "Hot", color: "#e88b7d" },
-  { value: "in-contract", label: "In Contract", color: "#a4e87d" },
+  { value: "cold", label: "Froid", color: "#7dbde8" },
+  { value: "warm", label: "Tiède", color: "#e8cb7d" },
+  { value: "hot", label: "Chaud", color: "#e88b7d" },
+  { value: "in-contract", label: "Sous contrat", color: "#a4e87d" },
 ];
 
 export const defaultTaskTypes = [
-  { value: "none", label: "None" },
-  { value: "email", label: "Email" },
-  { value: "demo", label: "Demo" },
-  { value: "lunch", label: "Lunch" },
-  { value: "meeting", label: "Meeting" },
-  { value: "follow-up", label: "Follow-up" },
-  { value: "thank-you", label: "Thank you" },
-  { value: "ship", label: "Ship" },
-  { value: "call", label: "Call" },
+  { value: "none", label: "Aucun" },
+  { value: "email", label: "E-mail" },
+  { value: "demo", label: "Démonstration" },
+  { value: "lunch", label: "Déjeuner" },
+  { value: "meeting", label: "Réunion" },
+  { value: "follow-up", label: "Relance" },
+  { value: "thank-you", label: "Remerciement" },
+  { value: "ship", label: "Envoi" },
+  { value: "call", label: "Appel" },
 ];
 
 export const defaultConfiguration: ConfigurationContextValue = {

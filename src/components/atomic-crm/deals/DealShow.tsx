@@ -5,6 +5,7 @@ import {
   InfiniteListBase,
   ShowBase,
   useDataProvider,
+  useLocaleState,
   useNotify,
   useRecordContext,
   useRedirect,
@@ -50,6 +51,7 @@ export const DealShow = ({ open, id }: { open: boolean; id?: string }) => {
 
 const DealShowContent = () => {
   const translate = useTranslate();
+  const [locale = "fr"] = useLocaleState();
   const { dealStages, dealCategories, currency } = useConfigurationContext();
   const record = useRecordContext<Deal>();
   if (!record) return null;
@@ -109,7 +111,7 @@ const DealShowContent = () => {
                 {translate("resources.deals.fields.amount")}
               </span>
               <span className="text-sm">
-                {record.amount.toLocaleString("en-US", {
+                {record.amount.toLocaleString(locale, {
                   notation: "compact",
                   style: "currency",
                   currency,

@@ -6,10 +6,19 @@ import path from "node:path";
 
 const registryPath = "registry.json";
 const basePath = "src";
-const atomicCrmComponentsPath = path.join(basePath, "components", "atomic-crm");
-const supabaseComponentsPath = path.join(basePath, "components", "supabase");
-const hooksPath = path.join(basePath, "hooks");
-const libPath = path.join(basePath, "lib");
+// Glob patterns and registry paths must use forward slashes on Windows too.
+const atomicCrmComponentsPath = path.posix.join(
+  basePath,
+  "components",
+  "atomic-crm",
+);
+const supabaseComponentsPath = path.posix.join(
+  basePath,
+  "components",
+  "supabase",
+);
+const hooksPath = path.posix.join(basePath, "hooks");
+const libPath = path.posix.join(basePath, "lib");
 
 const excludedHooks = [
   "filter-context.tsx",
@@ -30,19 +39,23 @@ const testFilePattern = "**/*.{test,spec}.*";
 const storyFilePattern = "**/*.stories.*";
 
 const atomicCrmComponents = globSync(
-  path.join(atomicCrmComponentsPath, "**", "*.ts*"),
+  path.posix.join(atomicCrmComponentsPath, "**", "*.ts*"),
   { ignore: [testFilePattern, storyFilePattern] },
 );
 const supabaseComponents = globSync(
-  path.join(supabaseComponentsPath, "**", "*.ts*"),
+  path.posix.join(supabaseComponentsPath, "**", "*.ts*"),
   { ignore: [testFilePattern, storyFilePattern] },
 );
-const hooks = globSync(path.join(hooksPath, "**", "*.ts*")).filter((hook) => {
-  return !excludedHooks.includes(path.basename(hook));
-});
-const libFiles = globSync(path.join(libPath, "**", "*.ts*")).filter((file) => {
-  return !excludedLibFiles.includes(path.basename(file));
-});
+const hooks = globSync(path.posix.join(hooksPath, "**", "*.ts*")).filter(
+  (hook) => {
+    return !excludedHooks.includes(path.basename(hook));
+  },
+);
+const libFiles = globSync(path.posix.join(libPath, "**", "*.ts*")).filter(
+  (file) => {
+    return !excludedLibFiles.includes(path.basename(file));
+  },
+);
 const changelogPath = "CHANGELOG.md";
 
 const registryContent = JSON.parse(fs.readFileSync(registryPath, "utf-8"));
@@ -50,25 +63,25 @@ const registryContent = JSON.parse(fs.readFileSync(registryPath, "utf-8"));
 const files = [
   ...atomicCrmComponents.map((path) => {
     return {
-      path,
+      path: path.replaceAll("\\", "/"),
       type: "registry:component",
     };
   }),
   ...supabaseComponents.map((path) => {
     return {
-      path,
+      path: path.replaceAll("\\", "/"),
       type: "registry:component",
     };
   }),
   ...hooks.map((path) => {
     return {
-      path,
+      path: path.replaceAll("\\", "/"),
       type: "registry:hook",
     };
   }),
   ...libFiles.map((path) => {
     return {
-      path,
+      path: path.replaceAll("\\", "/"),
       type: "registry:lib",
     };
   }),
@@ -83,9 +96,20 @@ const newRegistryContent = {
   ...registryContent,
   items: registryContent.items.map((item) => {
     if (item.name === "atomic-crm") {
+      // Keep the published order, so filesystem ordering does not cause
+      // unrelated registry churn across Windows and Unix checkouts.
+      const existingOrder = new Map(
+        item.files.map((file, index) => [file.path, index]),
+      );
+      const orderedFiles = [...files].sort(
+        (a, b) =>
+          (existingOrder.get(a.path) ?? Infinity) -
+            (existingOrder.get(b.path) ?? Infinity) ||
+          a.path.localeCompare(b.path),
+      );
       return {
         ...item,
-        files,
+        files: orderedFiles,
       };
     }
 

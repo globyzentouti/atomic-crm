@@ -25,27 +25,28 @@ import { useLocaleState } from "ra-core";
 const getDateFnsLocale = (locale: string) =>
   locale.startsWith("fr") ? fr : enUS;
 
-export const formatLocalizedDate = (date: string, locale = "en") =>
+export const formatLocalizedDate = (date: string, locale = "fr") =>
   new Intl.DateTimeFormat(locale, {
     year: "numeric",
-    month: "long",
-    day: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    ...(date.length === 10 ? { timeZone: "UTC" } : {}),
   }).format(new Date(date));
 
-export const formatRelativeDate = (date: string, locale = "en") => {
+export const formatRelativeDate = (date: string, locale = "fr") => {
   const dateObj = new Date(date);
   const now = new Date();
   const dateFnsLocale = getDateFnsLocale(locale);
 
   if (differenceInDays(now, dateObj) > 6) {
-    return new Intl.DateTimeFormat(locale).format(dateObj);
+    return formatLocalizedDate(date, locale);
   }
 
   return formatRelative(dateObj, now, { locale: dateFnsLocale });
 };
 
 export const useRelativeDate = (date: string) => {
-  const [locale = "en"] = useLocaleState();
+  const [locale = "fr"] = useLocaleState();
 
   return formatRelativeDate(date, locale);
 };

@@ -1,5 +1,10 @@
 import type { HTMLAttributes } from "react";
-import { genericMemo, useFieldValue, useTranslate } from "ra-core";
+import {
+  genericMemo,
+  useFieldValue,
+  useLocaleState,
+  useTranslate,
+} from "ra-core";
 
 import type { FieldProps } from "@/lib/field.type";
 
@@ -22,6 +27,8 @@ const DateFieldImpl = <
     ...rest
   } = inProps;
   const translate = useTranslate();
+  const [locale = "fr"] = useLocaleState();
+  const fieldLocales = locales ?? locale;
 
   if (!showTime && !showDate) {
     throw new Error(
@@ -43,28 +50,40 @@ const DateFieldImpl = <
   }
 
   const date = transform(value);
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    ...(options === undefined
+      ? ({ year: "numeric", month: "2-digit", day: "2-digit" } as const)
+      : {}),
+    // Date-only values must keep their calendar day across timezones.
+    ...(typeof value === "string" && value.length <= 10
+      ? { timeZone: "UTC" }
+      : {}),
+    ...options,
+  };
 
   let dateString = "";
   if (date) {
     if (showTime && showDate) {
       dateString = toLocaleStringSupportsLocales
-        ? date.toLocaleString(locales, options)
+        ? date.toLocaleString(
+            fieldLocales,
+            options ?? {
+              ...dateOptions,
+              hour: "2-digit",
+              minute: "2-digit",
+            },
+          )
         : date.toLocaleString();
     } else if (showDate) {
       // If input is a date string (e.g. '2022-02-15') without time and time zone,
       // force timezone to UTC to fix issue with people in negative time zones
       // who may see a different date when calling toLocaleDateString().
-      const dateOptions =
-        options ??
-        (typeof value === "string" && value.length <= 10
-          ? { timeZone: "UTC" }
-          : undefined);
       dateString = toLocaleStringSupportsLocales
-        ? date.toLocaleDateString(locales, dateOptions)
+        ? date.toLocaleDateString(fieldLocales, dateOptions)
         : date.toLocaleDateString();
     } else if (showTime) {
       dateString = toLocaleStringSupportsLocales
-        ? date.toLocaleTimeString(locales, options)
+        ? date.toLocaleTimeString(fieldLocales, options)
         : date.toLocaleTimeString();
     }
   }

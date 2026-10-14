@@ -6,6 +6,7 @@ import {
   Form,
   useGetList,
   useInput,
+  useLocaleState,
   useNotify,
   useTranslate,
 } from "ra-core";
@@ -105,13 +106,8 @@ export const validateItemsInUse = (
   return undefined;
 };
 
-const getCurrencyChoices = () => {
-  const displayNames = new Intl.DisplayNames(
-    typeof navigator !== "undefined"
-      ? (navigator.languages as string[])
-      : ["en"],
-    { type: "currency" },
-  );
+const getCurrencyChoices = (locale: string) => {
+  const displayNames = new Intl.DisplayNames(locale, { type: "currency" });
   return Intl.supportedValuesOf("currency").map((code) => ({
     id: code,
     name: `${code} – ${displayNames.of(code)}`,
@@ -191,7 +187,8 @@ const SettingsForm = () => {
 
 const SettingsFormFields = () => {
   const translate = useTranslate();
-  const currencyChoices = useMemo(() => getCurrencyChoices(), []);
+  const [locale = "fr"] = useLocaleState();
+  const currencyChoices = useMemo(() => getCurrencyChoices(locale), [locale]);
   const {
     watch,
     setValue,

@@ -9,7 +9,7 @@ export const findDealLabel = (dealStages: DealStage[], dealValue: string) => {
 
 export function getRelativeTimeString(
   dateString: string,
-  locale = "en",
+  locale = "fr",
 ): string {
   const date = new Date(dateString);
   date.setHours(0, 0, 0, 0);
@@ -23,8 +23,9 @@ export function getRelativeTimeString(
   // Check if the date is more than one week old
   if (Math.abs(unitDiff) > 7) {
     return new Intl.DateTimeFormat(locale, {
-      day: "numeric",
-      month: "long",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     }).format(date);
   }
 
@@ -48,5 +49,5 @@ export function formatISODateString(dateString: string) {
   const [year, month, day] = dateString.split("-").map(Number);
   const date = new Date(year, month - 1, day);
 
-  return format(date, "PP");
+  return format(date, "dd/MM/yyyy");
 }

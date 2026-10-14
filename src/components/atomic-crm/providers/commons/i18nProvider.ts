@@ -57,18 +57,9 @@ const frenchCatalog = mergeTranslations(
   frenchCrmMessages,
 );
 
-export const getInitialLocale = (): "en" | "fr" => {
-  if (typeof navigator === "undefined") {
-    return "en";
-  }
-
-  const browserLocale = navigator.languages?.[0] ?? navigator.language;
-  if (browserLocale?.toLowerCase().startsWith("fr")) {
-    return "fr";
-  }
-
-  return "en";
-};
+// French is the product default, independently of the browser language.
+// Explicit language preferences still use the existing ra-core store.
+export const getInitialLocale = (): "fr" => "fr";
 
 export const i18nProvider = polyglotI18nProvider(
   (locale) => {

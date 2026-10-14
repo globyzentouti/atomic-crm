@@ -1,5 +1,5 @@
 import { Draggable } from "@hello-pangea/dnd";
-import { useRedirect, RecordContextProvider } from "ra-core";
+import { useRedirect, useLocaleState, RecordContextProvider } from "ra-core";
 import { ReferenceField } from "@/components/admin/reference-field";
 import { NumberField } from "@/components/admin/number-field";
 import { SelectField } from "@/components/admin/select-field";
@@ -31,6 +31,7 @@ export const DealCardContent = ({
   deal: Deal;
 }) => {
   const { dealCategories, currency } = useConfigurationContext();
+  const [locale = "fr"] = useLocaleState();
   const redirect = useRedirect();
   const handleClick = () => {
     redirect(`/deals/${deal.id}/show`, undefined, undefined, undefined, {
@@ -76,6 +77,7 @@ export const DealCardContent = ({
             <p className="text-xs text-muted-foreground">
               <NumberField
                 source="amount"
+                locales={locale}
                 options={{
                   notation: "compact",
                   style: "currency",

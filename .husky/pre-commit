@@ -1,3 +1,5 @@
-make registry-gen
-npx lint-staged
+# Same registry generation/formatting as make registry-gen, also on Windows.
+npm run registry:gen
+npx --no-install prettier --config ./.prettierrc.json --write registry.json
+npx --no-install lint-staged
 git update-index --again

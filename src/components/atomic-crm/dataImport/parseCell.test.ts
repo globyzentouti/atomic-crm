@@ -78,6 +78,23 @@ describe("toIsoDate", () => {
 });
 
 describe("toConfiguredValue", () => {
+  it("keeps legacy English CSV labels working with French defaults", () => {
+    const frenchStages = [
+      { value: "proposal-sent", label: "Proposition envoyée" },
+      { value: "in-negociation", label: "En négociation" },
+    ];
+    expect(toConfiguredValue("Proposal Sent", frenchStages)).toBe(
+      "proposal-sent",
+    );
+    expect(toConfiguredValue("Proposition envoyée", frenchStages)).toBe(
+      "proposal-sent",
+    );
+    expect(toConfiguredValue("In Negotiation", frenchStages)).toBe(
+      "in-negociation",
+    );
+    expect(toConfiguredValue("Won", frenchStages)).toBeUndefined();
+  });
+
   it("matches a configured value", () => {
     expect(toConfiguredValue("proposal-sent", stages)).toBe("proposal-sent");
   });
